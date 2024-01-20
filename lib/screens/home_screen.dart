@@ -1,3 +1,5 @@
+import 'package:educationnal_app/screens/favorite.dart';
+import 'package:educationnal_app/screens/profile.dart';
 import 'package:educationnal_app/screens/testNewFront.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'dart:ui';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'category.dart';
 
 //void changeStatusBarColor() {
 // FlutterStatusbarcolor.setNavigationBarColor(Color(0xFF464646));
@@ -155,6 +158,8 @@ List<CarouselItem> itemList = [
     onImageTap: (i) {},
   ),
 ];
+
+
 List<Color> optionsColor = [
   Colors.blue,
   Colors.blue,
@@ -229,9 +234,59 @@ class _HomePageState extends State<HomePage> {
   late double searchbar_width;
   Color searchbar_color = Colors.white12;
 
+  PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  List<Color> bottomAppBarButtons = [
+  Color(0xFF674AEF),
+    Colors.white,
+    Colors.white,
+    Colors.white,
+  ];
+
+
+
   @override
   void initState() {
     super.initState();
+
+
+    _pageController.addListener(() {
+      int currentPage = _pageController.page!.round();
+      if (_currentPage != currentPage) {
+        setState(() {
+          _currentPage = currentPage;
+          switch(_currentPage){
+            case 0:
+              bottomAppBarButtons[0] = Color(0xFF674AEF);
+              bottomAppBarButtons[1] = Colors.white;
+              bottomAppBarButtons[2] = Colors.white;
+              bottomAppBarButtons[3] = Colors.white;
+              break;
+            case 1:
+              bottomAppBarButtons[1] = Color(0xFF674AEF);
+              bottomAppBarButtons[0] = Colors.white;
+              bottomAppBarButtons[2] = Colors.white;
+              bottomAppBarButtons[3] = Colors.white;
+              break;
+            case 2:
+              bottomAppBarButtons[2] = Color(0xFF674AEF);
+              bottomAppBarButtons[0] = Colors.white;
+              bottomAppBarButtons[1] = Colors.white;
+              bottomAppBarButtons[3] = Colors.white;
+              break;
+            case 3:
+              bottomAppBarButtons[3] = Color(0xFF674AEF);
+              bottomAppBarButtons[0] = Colors.white;
+              bottomAppBarButtons[2] = Colors.white;
+              bottomAppBarButtons[1] = Colors.white;
+              break;
+          }
+        });
+        // Mettez à jour l'état de la route ici si nécessaire
+      }
+    });
+
     focusNode = FocusNode();
     searchbar_width = 100; // Largeur initiale
     focusNode.addListener(() {
@@ -256,241 +311,326 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFF333333),
       body: Stack(
         children: [
-          Container(
-            child: ListView(
-              children: [
-                Container(
-                  padding:
-                      EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF674AEF),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      )),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              padding: EdgeInsets.all(14),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.transparent,
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    "Hi Roch ! ",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '${DateTime.now().day},${DateTime.now().month},${DateTime.now().year}',
-                                    style: TextStyle(
-                                      color: Colors.white38,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  //Icon(Icons.incomplete_circle, color: Color(0xFF674AEF),)
-                                ],
+          PageView(
+            controller: _pageController,
+            children: [
+              Container(
+                    child: ListView(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: 15, left: 15, right: 15, bottom: 10),
+                          decoration: BoxDecoration(
+                              color: Color(0xFF674AEF),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
                               )),
-                          Row(
+                          child: Column(
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.all(14),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "Hi Roch ! ",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            '${DateTime.now().day},${DateTime.now().month},${DateTime.now().year}',
+                                            style: TextStyle(
+                                              color: Colors.white38,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          //Icon(Icons.incomplete_circle, color: Color(0xFF674AEF),)
+                                        ],
+                                      )),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(4),
+                                        width: 50,
+                                        height: 45,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          color: Colors.white12,
+                                        ),
+                                        child: Icon(
+                                          Icons.notifications,
+                                          size: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 20),
                               Container(
-                                padding: EdgeInsets.all(4),
-                                width: 50,
-                                height: 45,
+                                margin:
+                                EdgeInsets.only(top: 5, bottom: 10, right: 7),
+                                padding: EdgeInsets.only(left: 10),
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                height: 50,
+                                alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white12,
-                                ),
-                                child: Icon(
-                                  Icons.notifications,
-                                  size: 24,
-                                  color: Colors.white,
+                                    color: Colors.white12,
+                                    border: Border.all(color: searchbar_color),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: TextFormField(
+                                  cursorHeight: 19,
+                                  onTapOutside: (PointerDownEvent) {
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  cursorColor: Colors.white,
+                                  focusNode: focusNode,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      size: 21,
+                                      color: Colors.white,
+                                    ),
+                                    hintText: "Search here...",
+                                    hintStyle: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
                                 ),
                               ),
                             ],
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10, right: 7),
-                        padding: EdgeInsets.only(left: 10),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.white12,
-                            border: Border.all(color: searchbar_color),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: TextFormField(
-                          cursorHeight: 19,
-                          onTapOutside: (PointerDownEvent) {
-                            FocusScope.of(context).unfocus();
-                          },
-                          cursorColor: Colors.white,
-                          focusNode: focusNode,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.search,
-                              size: 21,
-                              color: Colors.white,
-                            ),
-                            hintText: "Search here...",
-                            hintStyle:
-                                TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  margin: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(13),
-                    child: CustomCarouselSlider(
-                      items: itemList,
-                      animationCurve: Curves.easeInOut,
-                      height: 177,
-                      subHeight: 50,
-                      autoplay: true,
-                      showText: false,
-                      showSubBackground: true,
-                      indicatorShape: BoxShape.circle,
-                      selectedDotColor: Color(0xFF333333),
-                      unselectedDotColor: Colors.white,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 15, right: 15),
-                  decoration: BoxDecoration(
-                      color: Colors.white10,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                  child: Column(
-                    children: [
-                      GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 1.1,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(60),
                           ),
-                          itemCount: catNames.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          optionsColor[index],
-                                          Color(0xFF674AEF)
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: optionsIcon[index],
-                                    )),
-                                SizedBox(height: 10),
-                                Text(
-                                  options[index],
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white.withOpacity(0.7)),
-                                )
-                              ],
-                            );
-                          })
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 20, right: 5,top: 40),
-                        child: Text(
-                          "Categories",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white.withOpacity(0.7)),
-                        )),
-                    Container(
-                      margin: EdgeInsets.only(left: 5, right: 12,top: 40),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Mytest()));
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              "See all",
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF674AEF)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(13),
+                            child: CustomCarouselSlider(
+                              items: itemList,
+                              animationCurve: Curves.easeOut,
+                              height: 177,
+                              subHeight: 50,
+                              autoplay: true,
+                              showText: false,
+                              showSubBackground: true,
+                              indicatorShape: BoxShape.circle,
+                              selectedDotColor: Color(0xFF333333),
+                              unselectedDotColor: Colors.white,
                             ),
-                            Icon(Icons.arrow_forward_ios,
-                                color: Color(0xFF674AEF), size: 11)
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 15, right: 15),
+                          decoration: BoxDecoration(
+                              color: Colors.white10,
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                          padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                          child: Column(
+                            children: [
+                              GridView.builder(
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 1.1,
+                                  ),
+                                  itemCount: catNames.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  optionsColor[index],
+                                                  Color(0xFF674AEF)
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: optionsIcon[index],
+                                            )),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          options[index],
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white.withOpacity(0.7)),
+                                        )
+                                      ],
+                                    );
+                                  })
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                margin:
+                                EdgeInsets.only(left: 20, right: 5, top: 40),
+                                child: Text(
+                                  "Categories",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white.withOpacity(0.7)),
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(left: 5, right: 12, top: 40),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Mytest()));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "See all",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF674AEF)),
+                                    ),
+                                    Icon(Icons.arrow_forward_ios,
+                                        color: Color(0xFF674AEF), size: 11)
+                                  ],
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 10),
-                Container(
-                    margin: EdgeInsets.only(left: 15, right: 15, bottom: 40),
-                    padding: EdgeInsets.only(top: 25, bottom: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                        SizedBox(height: 10),
+                        Container(
+                            margin:
+                            EdgeInsets.only(left: 15, right: 15, bottom: 40),
+                            padding: EdgeInsets.only(top: 25, bottom: 15),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                                children: createContainers(
+                                    catNames.length, catIcon2, catNames)))
+                      ],
                     ),
-                    child: Column(
-                        children: createContainers(
-                            catNames.length, catIcon2, catNames)))
-              ],
-            ),
+                  ),
+              Category(),
+              Favorite(),
+              Profile()
+            ],
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: GlassmorphicBottomBar(),
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 35.0, sigmaY: 35.0),
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    border:
+                    Border(top: BorderSide(color: Colors.white.withOpacity(0.2))),
+                  ),
+                  child: Container(
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          IconButton(
+                              icon: Icon(Icons.home_filled,
+                                  size: 18,
+                                  color: bottomAppBarButtons[0]),
+                              onPressed: () {
+                                _pageController.animateToPage(
+                                  0, // Index de la page cible
+                                  duration: Duration(milliseconds: 100),
+                                  curve: Curves.easeInOut,
+                                );
+                              }),
+                          IconButton(
+                              icon: Icon(
+                                Icons.category,
+                                size: 18,
+                                color: bottomAppBarButtons[1]
+                              ),
+                              onPressed: () {
+                                _pageController.animateToPage(
+                                  1, // Index de la page cible
+                                  duration: Duration(milliseconds: 100),
+                                  curve: Curves.easeInOut,
+                                );
+                              }),
+                          IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                size: 18,
+                                color: bottomAppBarButtons[2]
+                              ),
+                              onPressed: () {
+                                _pageController.animateToPage(
+                                  2, // Index de la page cible
+                                  duration: Duration(milliseconds: 100),
+                                  curve: Curves.easeInOut,
+                                );
+                              }),
+                          IconButton(
+                              icon: Icon(
+                                Icons.person,
+                                size: 18,
+                                color: bottomAppBarButtons[3]
+                              ),
+                              onPressed: () {
+                                _pageController.animateToPage(
+                                  3, // Index de la page cible
+                                  duration: Duration(milliseconds: 100),
+                                  curve: Curves.easeInOut,
+                                );
+                              }),
+                          // Ajoutez d'autres icônes si nécessaire
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
-      ),
+      )
     );
   }
 
@@ -502,12 +642,17 @@ class _HomePageState extends State<HomePage> {
 }
 
 class GlassmorphicBottomBar extends StatefulWidget {
+
+
   @override
   State<GlassmorphicBottomBar> createState() => _GlassmorphicBottomBarState();
 }
 
 class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
   bool isIconClicked = false;
+
+
+
   @override
   Widget build(BuildContext context) {
     String currentRoute = ModalRoute.of(context)?.settings.name ?? '/second';
@@ -536,8 +681,9 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                 children: <Widget>[
                   IconButton(
                       icon: Icon(Icons.home_filled,
-                          color:
-                              currentRoute == '/' ? Color(0xFF674AEF) : Colors.white ),
+                          color: currentRoute == '/'
+                              ? Color(0xFF674AEF)
+                              : Colors.white),
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
@@ -547,9 +693,10 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                   IconButton(
                       icon: Icon(
                         Icons.category,
-                          size: 18,
-                          color:
-                          currentRoute == '/category' ? Color(0xFF674AEF) : Colors.white,
+                        size: 18,
+                        color: currentRoute == '/category'
+                            ? Color(0xFF674AEF)
+                            : Colors.white,
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
@@ -561,8 +708,9 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                       icon: Icon(
                         Icons.favorite,
                         size: 18,
-                        color:
-                        currentRoute == '/favorite' ? Color(0xFF674AEF) : Colors.white,
+                        color: currentRoute == '/favorite'
+                            ? Color(0xFF674AEF)
+                            : Colors.white,
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
@@ -574,8 +722,9 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                       icon: Icon(
                         Icons.person,
                         size: 18,
-                        color:
-                        currentRoute == '/profile' ? Color(0xFF674AEF) : Colors.white,
+                        color: currentRoute == '/profile'
+                            ? Color(0xFF674AEF)
+                            : Colors.white,
                       ),
                       onPressed: () {
                         Navigator.pushNamed(

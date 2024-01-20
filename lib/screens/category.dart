@@ -35,15 +35,8 @@ class _CategoryState extends State<Category> {
         ),
       ),
       backgroundColor: Color(0xFF333333),
-      body: Stack(
-        children: [
+      body:
           Text('catttttttttttt'),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GlassmorphicBottomBar(),
-          ),
-        ],
-      ),
     );
   }
 }

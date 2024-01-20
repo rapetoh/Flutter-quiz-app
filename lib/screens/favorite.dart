@@ -15,15 +15,8 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF333333),
-      body: Stack(
-        children: [
+      body:
           Text('favvvvvvvvvvvvvvvvvvvvv'),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GlassmorphicBottomBar(),
-          ),
-        ],
-      ),
     );
   }
 }

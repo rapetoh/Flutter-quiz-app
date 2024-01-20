@@ -22,26 +22,7 @@ class _ProfileState extends State<Profile> {
         ),
         title: Text('Choose Category'),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(8, (index) {
-          // Replace with your category data
-          return CategoryCard(
-            icon: Icons.category, // replace with category-specific icon
-            title: 'Category $index',
-            questionCount: '$index Questions',
-          );
-        }),
-      ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            // Handle next action
-          },
-          child: Text('Next'),
-        ),
-      ),
+      body: Text('Next'),
     );
   }
 }
