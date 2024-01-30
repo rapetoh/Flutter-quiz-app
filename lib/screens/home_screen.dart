@@ -9,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'category.dart';
+import 'login.dart';
+import 'package:shimmer/shimmer.dart';
 
 //void changeStatusBarColor() {
 // FlutterStatusbarcolor.setNavigationBarColor(Color(0xFF464646));
@@ -313,6 +315,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           PageView(
             controller: _pageController,
+            physics: BouncingScrollPhysics(),
             children: [
               Container(
                     child: ListView(
@@ -351,6 +354,7 @@ class _HomePageState extends State<HomePage> {
                                           SizedBox(
                                             height: 5,
                                           ),
+
                                           Text(
                                             '${DateTime.now().day},${DateTime.now().month},${DateTime.now().year}',
                                             style: TextStyle(
@@ -394,6 +398,9 @@ class _HomePageState extends State<HomePage> {
                                     border: Border.all(color: searchbar_color),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.white, // Mettez la couleur que vous souhaitez ici
+                                  ),
                                   cursorHeight: 19,
                                   onTapOutside: (PointerDownEvent) {
                                     FocusScope.of(context).unfocus();
@@ -513,7 +520,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Mytest()));
+                                          builder: (context) => LoginScreen()));
                                 },
                                 child: Row(
                                   children: [
@@ -571,19 +578,19 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           IconButton(
-                              icon: Icon(Icons.home_filled,
+                              icon: Icon(Icons.home_outlined,
                                   size: 18,
                                   color: bottomAppBarButtons[0]),
                               onPressed: () {
                                 _pageController.animateToPage(
                                   0, // Index de la page cible
-                                  duration: Duration(milliseconds: 100),
+                                  duration: Duration(milliseconds: 500),
                                   curve: Curves.easeInOut,
                                 );
                               }),
                           IconButton(
                               icon: Icon(
-                                Icons.category,
+                                Icons.category_outlined,
                                 size: 18,
                                 color: bottomAppBarButtons[1]
                               ),
@@ -596,7 +603,7 @@ class _HomePageState extends State<HomePage> {
                               }),
                           IconButton(
                               icon: Icon(
-                                Icons.favorite,
+                                Icons.favorite_outline,
                                 size: 18,
                                 color: bottomAppBarButtons[2]
                               ),
@@ -609,7 +616,7 @@ class _HomePageState extends State<HomePage> {
                               }),
                           IconButton(
                               icon: Icon(
-                                Icons.person,
+                                Icons.person_2_outlined,
                                 size: 18,
                                 color: bottomAppBarButtons[3]
                               ),
@@ -680,7 +687,7 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconButton(
-                      icon: Icon(Icons.home_filled,
+                      icon: Icon(Icons.home_outlined,
                           color: currentRoute == '/'
                               ? Color(0xFF674AEF)
                               : Colors.white),
@@ -692,7 +699,7 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                       }),
                   IconButton(
                       icon: Icon(
-                        Icons.category,
+                        Icons.category_outlined,
                         size: 18,
                         color: currentRoute == '/category'
                             ? Color(0xFF674AEF)
@@ -706,7 +713,7 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                       }),
                   IconButton(
                       icon: Icon(
-                        Icons.favorite,
+                        Icons.favorite_border_outlined,
                         size: 18,
                         color: currentRoute == '/favorite'
                             ? Color(0xFF674AEF)
@@ -720,7 +727,7 @@ class _GlassmorphicBottomBarState extends State<GlassmorphicBottomBar> {
                       }),
                   IconButton(
                       icon: Icon(
-                        Icons.person,
+                        Icons.person_2_outlined,
                         size: 18,
                         color: currentRoute == '/profile'
                             ? Color(0xFF674AEF)
